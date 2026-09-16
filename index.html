@@ -1,1624 +1,635 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SUKAPOULLO XPRESS</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f5f7fa;
-  color:#111827;
-}
-
-header{
-  background:#0b132b;
-  color:white;
-  padding:18px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-}
-
-.logo{
-  font-size:21px;
-  font-weight:bold;
-}
-
-button{
-  border:0;
-  border-radius:10px;
-  padding:12px 18px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.login-btn{
-  background:#22c55e;
-  color:white;
-}
-
-.hero{
-  background:#0b132b;
-  color:white;
-  text-align:center;
-  padding:30px 20px 45px;
-}
-
-.hero h1{
-  margin:5px 0 10px;
-  font-size:30px;
-}
-
-.hero p{
-  color:#d1d5db;
-}
-
-.container{
-  max-width:650px;
-  margin:-20px auto 30px;
-  padding:0 15px;
-}
-
-.card{
-  background:white;
-  padding:22px;
-  border-radius:18px;
-  box-shadow:0 8px 25px #00000012;
-  margin-bottom:20px;
-}
-
-h2{
-  margin-top:0;
-}
-
-label{
-  display:block;
-  font-weight:bold;
-  margin:12px 0 6px;
-}
-
-input,select{
-  width:100%;
-  padding:13px;
-  border:1px solid #d1d5db;
-  border-radius:10px;
-  font-size:16px;
-}
-
-.receive{
-  background:#ecfdf5;
-  border-radius:12px;
-  padding:18px;
-  margin-top:15px;
-}
-
-.receive strong{
-  display:block;
-  font-size:27px;
-  color:#15803d;
-  margin-top:5px;
-}
-
-.submit{
-  width:100%;
-  margin-top:18px;
-  background:#16a34a;
-  color:white;
-  font-size:17px;
-}
-
-.status{
-  margin-top:15px;
-  padding:12px;
-  border-radius:10px;
-  display:none;
-}
-
-.features{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-}
-
-.feature{
-  text-align:center;
-  padding:15px 5px;
-  background:#f8fafc;
-  border-radius:12px;
-}
-
-footer{
-  background:#0b132b;
-  color:white;
-  text-align:center;
-  padding:25px;
-}
-
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:#0008;
-  z-index:10;
-  align-items:center;
-  justify-content:center;
-  padding:15px;
-}
-
-.modal-box{
-  background:white;
-  width:100%;
-  max-width:420px;
-  border-radius:18px;
-  padding:22px;
-}
-
-.modal-box h2{
-  text-align:center;
-}
-
-.modal-actions{
-  display:flex;
-  gap:10px;
-  margin-top:15px;
-}
-
-.modal-actions button{
-  flex:1;
-}
-
-.close{
-  background:#e5e7eb;
-}
-
-.auth-btn{
-  background:#16a34a;
-  color:white;
-}
-
-.user{
-  font-size:13px;
-  color:#bbf7d0;
-}
-
-.admin-request{
-  border:1px solid #e5e7eb;
-  border-radius:12px;
-  padding:15px;
-  margin-bottom:12px;
-}
-
-.admin-title{
-  color:#0b132b;
-}
-
-.admin-save{
-  width:100%;
-  margin-top:10px;
-  background:#0b132b;
-  color:white;
-}
-
-@media(max-width:500px){
-  .features{
-    grid-template-columns:1fr;
-  }
-
-  header{
-    padding:14px;
-  }
-
-  .logo{
-    font-size:17px;
-  }
-
-  .user{
-    display:none;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SUKAPOULLO XPRESS</title>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#0f172a}
+    header{background:#071a35;color:white;padding:18px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+    header h1{font-size:20px;margin:0}
+    header button{background:#16a34a;color:white;border:0;border-radius:8px;padding:9px 12px;font-weight:bold}
+    .container{max-width:900px;margin:auto;padding:16px}
+    .card{background:white;border-radius:14px;padding:18px;margin-bottom:16px;box-shadow:0 3px 12px #00000012}
+    h2,h3{margin-top:0}
+    .hero{background:linear-gradient(135deg,#071a35,#0f766e);color:white}
+    .hero h2{font-size:25px;margin-bottom:8px}
+    .muted{color:#64748b;font-size:14px}
+    .hero .muted{color:#dbeafe}
+    label{display:block;font-weight:bold;margin:12px 0 6px}
+    input,select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font-size:16px;background:white}
+    button{cursor:pointer}
+    .submit{width:100%;padding:13px;border:0;border-radius:9px;background:#16a34a;color:white;font-size:16px;font-weight:bold;margin-top:14px}
+    .secondary{background:#0f172a}
+    .danger{background:#dc2626}
+    .result{font-size:25px;font-weight:bold;margin-top:10px;color:#047857}
+    .status{margin-top:10px;padding:9px;border-radius:8px;font-size:14px;display:none}
+    .status.show{display:block;background:#ecfdf5;color:#166534}
+    .status.error{display:block;background:#fef2f2;color:#991b1b}
+    .hidden{display:none!important}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .request{border:1px solid #e2e8f0;border-radius:10px;padding:13px;margin-top:12px;background:#f8fafc}
+    .badge{display:inline-block;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:bold;background:#fef3c7;color:#92400e}
+    .badge.completed{background:#dcfce7;color:#166534}
+    .badge.processing{background:#dbeafe;color:#1d4ed8}
+    .badge.cancelled{background:#fee2e2;color:#991b1b}
+    footer{text-align:center;padding:25px;color:#64748b;font-size:13px}
+    .nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+    .nav button{border:0;border-radius:8px;padding:10px 12px;background:#e2e8f0;color:#0f172a;font-weight:bold}
+    .nav button.active{background:#071a35;color:white}
+    @media(max-width:600px){.row{grid-template-columns:1fr}header h1{font-size:17px}}
+    .modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:16px;z-index:20}
+    .modal-box{background:white;width:100%;max-width:420px;border-radius:14px;padding:20px}
+    .close{float:right;border:0;background:#e2e8f0;border-radius:50%;width:32px;height:32px}
+  </style>
 </head>
-
 <body>
 
 <header>
-  <div class="logo">↔ SUKAPOULLO XPRESS</div>
-
-  <div>
-    <span id="userText" class="user"></span>
-
-    <button class="login-btn" id="loginButton">
-      Login
-    </button>
-  </div>
+  <h1>↔ SUKAPOULLO XPRESS</h1>
+  <button id="loginButton">Login</button>
 </header>
-
-<section class="hero">
-
-  <h1>CFA ↔ NGN</h1>
-
-  <h3>FAST • SECURE • SIMPLE</h3>
-
-  <p>Exchange Online</p>
-
-  <p>
-    Fast and secure currency exchange service for CFA and Nigerian Naira.
-  </p>
-
-</section>
 
 <main class="container">
 
-  <!-- CALCULATOR -->
+  <section class="card hero">
+    <h2>CFA ↔ NGN</h2>
+    <p>FAST • SECURE • SIMPLE</p>
+    <p class="muted">Exchange Online</p>
+    <p class="muted">Fast and secure currency exchange service for CFA and Nigerian Naira.</p>
+  </section>
 
-  <div class="card">
-
-    <h2>💱 Exchange Calculator</h2>
-
-    <label>Direction</label>
-
-    <select id="direction">
-
-      <option value="XOF_NGN">
-        CFA → NGN
-      </option>
-
-      <option value="NGN_XOF">
-        NGN → CFA
-      </option>
-
-    </select>
-
-    <label>Amount</label>
-
-    <input
-      type="number"
-      id="amount"
-      placeholder="Enter amount"
-      min="1"
-    >
-
-    <div class="receive">
-
-      YOU RECEIVE
-
-      <strong id="receive">
-        0
-      </strong>
-
-      <span id="receiveCurrency">
-        NGN
-      </span>
-
-      <p id="rateText">
-        Rate loading...
-      </p>
-
-    </div>
-
+  <div class="nav">
+    <button class="active" id="customerTab">Exchange</button>
+    <button id="adminTab" class="hidden">Admin Dashboard</button>
   </div>
 
+  <section id="customerSection">
 
-  <!-- EXCHANGE REQUEST -->
+    <div class="card">
+      <h3>💱 Exchange Calculator</h3>
 
-  <div class="card">
+      <label>Direction</label>
+      <select id="direction">
+        <option value="XOF_NGN">CFA → NGN</option>
+        <option value="NGN_XOF">NGN → CFA</option>
+      </select>
 
-    <h2>📝 Exchange Request</h2>
+      <label>Amount</label>
+      <input type="number" id="amount" placeholder="Enter amount" min="0">
 
-    <p>
-      Login sannan ka cika bayanan da ke ƙasa domin aika request.
-    </p>
-
-    <label>Phone Number</label>
-
-    <input
-      type="tel"
-      id="phone"
-      placeholder="+227 ..."
-    >
-
-    <label>Direction</label>
-
-    <select id="requestDirection">
-
-      <option value="XOF_NGN">
-        CFA → NGN
-      </option>
-
-      <option value="NGN_XOF">
-        NGN → CFA
-      </option>
-
-    </select>
-
-    <label>Amount</label>
-
-    <input
-      type="number"
-      id="requestAmount"
-      placeholder="Enter amount"
-      min="1"
-    >
-
-    <div class="receive">
-
-      YOU WILL RECEIVE
-
-      <strong id="requestReceive">
-        0
-      </strong>
-
-      <span id="requestCurrency">
-        NGN
-      </span>
-
+      <div class="muted" style="margin-top:14px">YOU RECEIVE</div>
+      <div class="result"><span id="receiveAmount">0</span> <span id="receiveCurrency">NGN</span></div>
+      <div class="muted" id="rateText">Rate loading...</div>
     </div>
 
-    <button
-      class="submit"
-      id="submitRequest"
-    >
-      Submit Exchange Request
-    </button>
+    <div class="card">
+      <h3>📝 Exchange Request</h3>
+      <p class="muted">Login sannan ka cika bayanan da ke ƙasa.</p>
 
-    <div
-      class="status"
-      id="requestStatus"
-    ></div>
+      <label>Customer Name</label>
+      <input type="text" id="customerName" placeholder="Sunanka">
 
-  </div>
+      <label>Phone Number</label>
+      <input type="tel" id="customerPhone" placeholder="+227 ...">
 
-
-  <!-- FEATURES -->
-
-  <div class="card">
-
-    <div class="features">
-
-      <div class="feature">
-        ⚡<br>
-        <b>Fast</b><br>
-        <small>Quick requests</small>
-      </div>
-
-      <div class="feature">
-        🔒<br>
-        <b>Secure</b><br>
-        <small>Supabase protected</small>
-      </div>
-
-      <div class="feature">
-        📱<br>
-        <b>Anywhere</b><br>
-        <small>Mobile friendly</small>
-      </div>
-
+      <button class="submit" id="requestButton">Send Exchange Request</button>
+      <div class="status" id="requestStatus"></div>
     </div>
 
-  </div>
-
-
-  <!-- ADMIN DASHBOARD -->
-
-  <div
-    class="card"
-    id="adminDashboard"
-    style="display:none"
-  >
-
-    <h2 class="admin-title">
-      🛠️ Admin Dashboard
-    </h2>
-
-    <p>
-      Exchange Requests
-    </p>
-
-
-    <!-- CHANGE RATE -->
-
-<div
-  class="card"
-  style="background:#f8fafc"
->
-
-  <h3>
-    💱 Change Rate
-  </h3>
-
-  <label>
-    CFA → NGN
-  </label>
-
-  <input
-    type="number"
-    id="adminXofNgn"
-    step="0.000001"
-    placeholder="0.76"
-  >
-
-  <div
-    class="status"
-    id="rateAdminStatus"
-  ></div>
-
-</div>
-
-  
-   <div
-  class="card"
-  style="background:#f8fafc"
->
-  <h3>🏦 Payment Accounts</h3>
-
-  <label>Account Name</label>
-  <input
-    type="text"
-    id="paymentAccountName"
-    placeholder="Misali: SUKAPOULLO XPRESS"
-  >
-
-  <label>Account Number</label>
-  <input
-    type="text"
-    id="paymentAccountNumber"
-    placeholder="Lambar Account"
-  >
-
-  <label>Bank Name</label>
-  <input
-    type="text"
-    id="paymentBankName"
-    placeholder="Sunan Bank"
-  >
-
-  <label>Payment Type</label>
-  <select id="paymentType">
-    <option value="bank">Bank</option>
-    <option value="mobile_money">Mobile Money</option>
-  </select>
-
-  <button
-    class="submit"
-    onclick="savePaymentAccount()"
-  >
-    💾 Save Account
-  </button>
-
-  <div
-    class="status"
-    id="paymentAccountStatus"
-  ></div>
-    </div>   class="card"
-      style="background:#f8fafc"
-    >
-
-      <h3>
-        💱 Change Rate
-      </h3>
-
-      <label>
-        CFA → NGN
-      </label>
-
-      <input
-        type="number"
-        id="adminXofNgn"
-        step="0.000001"
-        placeholder="0.76"
-      >
-
-      <label>
-        NGN → CFA
-      </label>
-
-      <input
-        type="number"
-        id="adminNgnXof"
-        step="0.000001"
-        placeholder="1.31"
-      >
-
-      <button
-        class="submit"
-        onclick="saveRates()"
-      >
-        💾 Save Rate
-      </button>
-
-    <!-- ADMIN REQUESTS -->
-
-    <div id="adminRequests">
-      Loading requests...
+    <div class="card">
+      <h3>🏦 Payment Accounts</h3>
+      <p class="muted">Bayan admin ya saka account, bayanan biyan kuɗi za su bayyana a nan.</p>
+      <div id="paymentAccounts">Loading...</div>
     </div>
 
-  </div>
+    <div class="card">
+      <h3>📋 My Exchange Requests</h3>
+      <div id="myRequests">Login domin ganin requests ɗinka.</div>
+    </div>
+
+  </section>
+
+  <section id="adminSection" class="hidden">
+
+    <div class="card">
+      <h3>⚙️ Admin Settings</h3>
+      <p class="muted">Wannan sashe admin kawai zai iya amfani da shi.</p>
+    </div>
+
+    <div class="card">
+      <h3>💱 Change Rate</h3>
+
+      <label>CFA → NGN</label>
+      <input type="number" id="adminXofNgn" step="0.000001" placeholder="0.76">
+
+      <label>NGN → CFA</label>
+      <input type="number" id="adminNgnXof" step="0.000001" placeholder="1.31">
+
+      <button class="submit" id="saveRatesButton">💾 Save Rate</button>
+      <div class="status" id="rateAdminStatus"></div>
+    </div>
+
+    <div class="card">
+      <h3>🏦 Payment Accounts</h3>
+
+      <label>Account Name</label>
+      <input type="text" id="paymentAccountName" placeholder="Misali: SUKAPOULLO XPRESS">
+
+      <label>Account Number</label>
+      <input type="text" id="paymentAccountNumber" placeholder="Lambar Account">
+
+      <label>Bank Name</label>
+      <input type="text" id="paymentBankName" placeholder="Sunan Bank">
+
+      <label>Payment Type</label>
+      <select id="paymentType">
+        <option value="bank">Bank</option>
+        <option value="mobile_money">Mobile Money</option>
+      </select>
+
+      <button class="submit" id="savePaymentButton">💾 Save Account</button>
+      <div class="status" id="paymentAccountStatus"></div>
+
+      <div id="adminPaymentAccounts"></div>
+    </div>
+
+    <div class="card">
+      <h3>📨 Exchange Requests</h3>
+      <div id="adminRequests">Loading requests...</div>
+    </div>
+
+  </section>
 
 </main>
 
-
 <footer>
-
-  <b>SUKAPOULLO XPRESS</b>
-
-  <br><br>
-
-  My Nita Transfert • Amana Transfert
-
-  <br><br>
-
+  SUKAPOULLO XPRESS • FAST • SECURE • SIMPLE<br>
   Support: +227 99 25 81 16
-
 </footer>
 
-
-<!-- LOGIN MODAL -->
-
-<div
-  class="modal"
-  id="authModal"
->
-
+<div class="modal" id="authModal">
   <div class="modal-box">
+    <button class="close" id="closeModal">×</button>
+    <h3 id="authTitle">Login</h3>
 
-    <h2>
-      🔐 Customer Login
-    </h2>
+    <label>Email</label>
+    <input type="email" id="authEmail" placeholder="Email">
 
-    <label>
-      Email
-    </label>
+    <label>Password</label>
+    <input type="password" id="authPassword" placeholder="Password">
 
-    <input
-      type="email"
-      id="email"
-      placeholder="Your email"
-    >
-
-    <label>
-      Password
-    </label>
-
-    <input
-      type="password"
-      id="password"
-      placeholder="Your password"
-    >
-
-    <div class="modal-actions">
-
-      <button
-        class="auth-btn"
-        id="login"
-      >
-        Login
-      </button>
-
-      <button
-        class="auth-btn"
-        id="register"
-      >
-        Create Account
-      </button>
-
-    </div>
-
-    <button
-      class="close"
-      id="closeModal"
-      style="width:100%;margin-top:10px"
-    >
-      Close
-    </button>
-
-    <div
-      class="status"
-      id="authStatus"
-    ></div>
-
+    <button class="submit" id="authSubmit">Login</button>
+    <button class="submit secondary" id="toggleAuth" type="button">Create Account</button>
+    <div class="status" id="authStatus"></div>
   </div>
-
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+const SUPABASE_URL = "https://jpedjempymwlshyarvmr.supabase.co";
+const SUPABASE_KEY = "sb_publishable_X89kCKmA-u9DRwQvPbsqYA_Jvlii702";
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const SUPABASE_URL =
-"https://jpedjempymwlshyarvmr.supabase.co";
+let rates = {XOF_NGN:0.76, NGN_XOF:1.31};
+let currentUser = null;
+let isAdmin = false;
+let loginMode = true;
 
-const SUPABASE_KEY =
-"sb_publishable_X89kCKmA-u9DRwQvPbsqYA_Jvlii702";
+const $ = id => document.getElementById(id);
 
-const { createClient } =
-supabase;
-
-const db =
-createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-
-/* =========================
-   RATES
-========================= */
-
-let rates = {
-
-  XOF_NGN: 0.76,
-
-  NGN_XOF: 1.31
-
-};
-
-
-const direction =
-document.getElementById(
-  "direction"
-);
-
-const amount =
-document.getElementById(
-  "amount"
-);
-
-const receive =
-document.getElementById(
-  "receive"
-);
-
-const receiveCurrency =
-document.getElementById(
-  "receiveCurrency"
-);
-
-const rateText =
-document.getElementById(
-  "rateText"
-);
-
-
-const requestDirection =
-document.getElementById(
-  "requestDirection"
-);
-
-const requestAmount =
-document.getElementById(
-  "requestAmount"
-);
-
-const requestReceive =
-document.getElementById(
-  "requestReceive"
-);
-
-const requestCurrency =
-document.getElementById(
-  "requestCurrency"
-);
-
-
-/* =========================
-   LOAD RATES
-========================= */
-
-async function loadRates(){
-
-  const {data,error} =
-    await db
-      .from("exchange_rates")
-      .select(
-        "from_currency,to_currency,rate"
-      )
-      .eq(
-        "is_active",
-        true
-      );
-
-
-  if(error){
-
-    console.log(error);
-
-    return;
-  }
-
-
-  data.forEach(row => {
-
-    if(
-      row.from_currency === "XOF" &&
-      row.to_currency === "NGN"
-    ){
-
-      rates.XOF_NGN =
-        Number(row.rate);
-
-    }
-
-
-    if(
-      row.from_currency === "NGN" &&
-      row.to_currency === "XOF"
-    ){
-
-      rates.NGN_XOF =
-        Number(row.rate);
-
-    }
-
-  });
-
-
-  updateCalculator();
-
-  updateRequestCalculator();
-
+function showStatus(el, text, error=false){
+  el.textContent = text;
+  el.className = "status show" + (error ? " error" : "");
 }
-
-
-/* =========================
-   CALCULATOR
-========================= */
-
-function updateCalculator(){
-
-  const value =
-    Number(amount.value) || 0;
-
-  const selected =
-    direction.value;
-
-  const result =
-    value * rates[selected];
-
-
-  receive.textContent =
-    result.toLocaleString();
-
-
-  if(
-    selected === "XOF_NGN"
-  ){
-
-    receiveCurrency.textContent =
-      "NGN";
-
-    rateText.textContent =
-      "Rate: 1 CFA = "
-      + rates.XOF_NGN
-      + " NGN";
-
-  }else{
-
-    receiveCurrency.textContent =
-      "CFA";
-
-    rateText.textContent =
-      "Rate: 1 NGN = "
-      + rates.NGN_XOF
-      + " CFA";
-
-  }
-
-}
-
-
-function updateRequestCalculator(){
-
-  const value =
-    Number(
-      requestAmount.value
-    ) || 0;
-
-  const selected =
-    requestDirection.value;
-
-  const result =
-    value * rates[selected];
-
-
-  requestReceive.textContent =
-    result.toLocaleString();
-
-
-  if(
-    selected === "XOF_NGN"
-  ){
-
-    requestCurrency.textContent =
-      "NGN";
-
-  }else{
-
-    requestCurrency.textContent =
-      "CFA";
-
-  }
-
-}
-
-
-direction.addEventListener(
-  "change",
-  updateCalculator
-);
-
-amount.addEventListener(
-  "input",
-  updateCalculator
-);
-
-requestDirection.addEventListener(
-  "change",
-  updateRequestCalculator
-);
-
-requestAmount.addEventListener(
-  "input",
-  updateRequestCalculator
-);
-
-
-/* =========================
-   AUTH
-========================= */
-
-const modal =
-document.getElementById(
-  "authModal"
-);
-
-
-document.getElementById(
-  "loginButton"
-)
-.addEventListener(
-  "click",
-  async()=>{
-
-    const {data} =
-      await db.auth.getSession();
-
-
-    if(data.session){
-
-      await db.auth.signOut();
-
-      updateUser();
-
-      checkAdmin();
-
-    }else{
-
-      modal.style.display =
-        "flex";
-
-    }
-
-  }
-);
-
-
-document.getElementById(
-  "closeModal"
-)
-.addEventListener(
-  "click",
-  ()=>{
-
-    modal.style.display =
-      "none";
-
-  }
-);
-
-
-/* REGISTER */
-
-document.getElementById(
-  "register"
-)
-.addEventListener(
-  "click",
-  async()=>{
-
-    const email =
-      document
-        .getElementById(
-          "email"
-        )
-        .value
-        .trim();
-
-
-    const password =
-      document
-        .getElementById(
-          "password"
-        )
-        .value;
-
-
-    const status =
-      document.getElementById(
-        "authStatus"
-      );
-
-
-    if(
-      !email ||
-      !password
-    ){
-
-      status.style.display =
-        "block";
-
-      status.textContent =
-        "Cika email da password.";
-
-      return;
-
-    }
-
-
-    const {error} =
-      await db.auth.signUp({
-
-        email,
-
-        password
-
-      });
-
-
-    status.style.display =
-      "block";
-
-
-    if(error){
-
-      status.textContent =
-        error.message;
-
-    }else{
-
-      status.textContent =
-        "Account an ƙirƙira successfully.";
-
-    }
-
-  }
-);
-
-
-/* LOGIN */
-
-document.getElementById(
-  "login"
-)
-.addEventListener(
-  "click",
-  async()=>{
-
-    const email =
-      document
-        .getElementById(
-          "email"
-        )
-        .value
-        .trim();
-
-
-    const password =
-      document
-        .getElementById(
-          "password"
-        )
-        .value;
-
-
-    const status =
-      document.getElementById(
-        "authStatus"
-      );
-
-
-    const {error} =
-      await db.auth.signInWithPassword({
-
-        email,
-
-        password
-
-      });
-
-
-    status.style.display =
-      "block";
-
-
-    if(error){
-
-      status.textContent =
-        error.message;
-
-    }else{
-
-      status.textContent =
-        "Login successful.";
-
-      modal.style.display =
-        "none";
-
-      updateUser();
-
-      checkAdmin();
-
-    }
-
-  }
-);
-
-
-/* =========================
-   USER
-========================= */
-
-async function updateUser(){
-
-  const {data} =
-    await db.auth.getSession();
-
-
-  const userText =
-    document.getElementById(
-      "userText"
-    );
-
-
-  const loginButton =
-    document.getElementById(
-      "loginButton"
-    );
-
-
-  if(data.session){
-
-    userText.textContent =
-      data.session.user.email;
-
-    loginButton.textContent =
-      "Logout";
-
-  }else{
-
-    userText.textContent =
-      "";
-
-    loginButton.textContent =
-      "Login";
-
-  }
-
-}
-
-
-/* =========================
-   EXCHANGE REQUEST
-========================= */
-
-document.getElementById(
-  "submitRequest"
-)
-.addEventListener(
-  "click",
-  async()=>{
-
-    const status =
-      document.getElementById(
-        "requestStatus"
-      );
-
-
-    const phone =
-      document
-        .getElementById(
-          "phone"
-        )
-        .value
-        .trim();
-
-
-    const value =
-      Number(
-        requestAmount.value
-      );
-
-
-    const selected =
-      requestDirection.value;
-
-
-    const {data} =
-      await db.auth.getSession();
-
-
-    if(!data.session){
-
-      status.style.display =
-        "block";
-
-      status.textContent =
-        "Da farko ka yi Login kafin ka aika request.";
-
-      return;
-
-    }
-
-
-    if(!phone){
-
-      status.style.display =
-        "block";
-
-      status.textContent =
-        "Saka phone number ɗinka.";
-
-      return;
-
-    }
-
-
-    if(
-      !value ||
-      value <= 0
-    ){
-
-      status.style.display =
-        "block";
-
-      status.textContent =
-        "Saka amount mai inganci.";
-
-      return;
-
-    }
-
-
-    const receiveAmount =
-      value * rates[selected];
-
-
-    const {error} =
-      await db
-        .from(
-          "exchange_requests"
-        )
-        .insert({
-
-          user_id:
-            data.session.user.id,
-
-          customer_name:
-            data.session.user.email,
-
-          customer_phone:
-            phone,
-
-          direction:
-            selected,
-
-          send_amount:
-            value,
-
-          receive_amount:
-            receiveAmount,
-
-          rate:
-            rates[selected],
-
-          status:
-            "pending"
-
-        });
-
-
-    status.style.display =
-      "block";
-
-
-    if(error){
-
-      console.log(error);
-
-      status.textContent =
-        "An samu matsala wajen aika request: "
-        + error.message;
-
-    }else{
-
-      status.textContent =
-        "✅ An aika Exchange Request ɗinka successfully. Za mu duba shi.";
-
-
-      document.getElementById(
-        "phone"
-      ).value = "";
-
-
-      requestAmount.value =
-        "";
-
-
-      updateRequestCalculator();
-
-    }
-
-  }
-);
-
-
-/* =========================
-   ADMIN
-========================= */
 
 function escapeHtml(value){
-
-  return String(
-    value ?? ""
-  )
-  .replace(
-    /&/g,
-    "&amp;"
-  )
-  .replace(
-    /</g,
-    "&lt;"
-  )
-  .replace(
-    />/g,
-    "&gt;"
-  )
-  .replace(
-    /"/g,
-    "&quot;"
-  )
-  .replace(
-    /'/g,
-    "&#039;"
-  );
-
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 }
 
+async function loadRates(){
+  const {data,error} = await db
+    .from("exchange_rates")
+    .select("from_currency,to_currency,rate")
+    .eq("is_active",true);
 
-/* =========================
-   ADMIN CHECK
-========================= */
+  if(!error && data){
+    for(const r of data){
+      if(r.from_currency==="XOF" && r.to_currency==="NGN") rates.XOF_NGN=Number(r.rate);
+      if(r.from_currency==="NGN" && r.to_currency==="XOF") rates.NGN_XOF=Number(r.rate);
+    }
+  }
+  calculate();
+}
+
+function calculate(){
+  const direction = $("direction").value;
+  const amount = Number($("amount").value || 0);
+  const rate = rates[direction] || 0;
+  const receive = amount * rate;
+
+  $("receiveAmount").textContent = receive.toLocaleString(undefined,{maximumFractionDigits:2});
+  $("receiveCurrency").textContent = direction==="XOF_NGN" ? "NGN" : "CFA";
+  $("rateText").textContent =
+    direction==="XOF_NGN"
+    ? "Rate: 1 CFA = " + rate + " NGN"
+    : "Rate: 1 NGN = " + rate + " CFA";
+}
+
+async function updateUser(){
+  const {data} = await db.auth.getSession();
+  currentUser = data.session?.user || null;
+
+  $("loginButton").textContent = currentUser ? "Logout" : "Login";
+
+  if(currentUser){
+    $("customerName").value = currentUser.user_metadata?.full_name || "";
+  }
+
+  await checkAdmin();
+  await loadMyRequests();
+}
 
 async function checkAdmin(){
+  isAdmin = false;
 
-  const adminDashboard =
-    document.getElementById(
-      "adminDashboard"
-    );
-
-
-  const {data} =
-    await db.auth.getSession();
-
-
-  if(!data.session){
-
-    adminDashboard.style.display =
-      "none";
-
+  if(!currentUser){
+    $("adminTab").classList.add("hidden");
+    $("adminSection").classList.add("hidden");
     return;
-
   }
 
+  const {data,error} = await db
+    .from("admin_users")
+    .select("user_id")
+    .eq("user_id",currentUser.id)
+    .maybeSingle();
 
-  const {data:admin,error} =
-    await db
-      .from("admin_users")
-      .select("user_id")
-      .eq(
-        "user_id",
-        data.session.user.id
-      )
-      .maybeSingle();
-
-
-  if(error){
-
-    console.log(
-      "Admin check error:",
-      error
-    );
-
-
-    adminDashboard.style.display =
-      "none";
-
-    return;
-
+  if(!error && data){
+    isAdmin = true;
+    $("adminTab").classList.remove("hidden");
+  }else{
+    $("adminTab").classList.add("hidden");
+    $("adminSection").classList.add("hidden");
   }
-
-
-  if(!admin){
-
-    adminDashboard.style.display =
-      "none";
-
-    return;
-
-  }
-
-
-  adminDashboard.style.display =
-    "block";
-
-
-  /* LOAD CURRENT ADMIN RATES */
-
-  loadAdminRates();
-
-
-  /* LOAD REQUESTS */
-
-  loadAdminRequests();
-
 }
 
+async function openAuth(){
+  if(currentUser){
+    await db.auth.signOut();
+    currentUser = null;
+    isAdmin = false;
+    $("adminTab").classList.add("hidden");
+    $("adminSection").classList.add("hidden");
+    $("authModal").style.display = "none";
+    await loadMyRequests();
+    $("loginButton").textContent = "Login";
+    return;
+  }
+  $("authModal").style.display = "flex";
+}
 
-/* =========================
-   LOAD ADMIN REQUESTS
-========================= */
+async function submitAuth(){
+  const email = $("authEmail").value.trim();
+  const password = $("authPassword").value;
+
+  if(!email || !password){
+    showStatus($("authStatus"),"Cika email da password.",true);
+    return;
+  }
+
+  $("authSubmit").disabled = true;
+
+  if(loginMode){
+    const {error} = await db.auth.signInWithPassword({email,password});
+
+    if(error){
+      showStatus($("authStatus"),error.message,true);
+    }else{
+      $("authModal").style.display = "none";
+      showStatus($("authStatus"),"Login successful.");
+      await updateUser();
+    }
+  }else{
+    const {data,error} = await db.auth.signUp({
+      email,
+      password,
+      options:{data:{full_name:$("customerName").value.trim()}}
+    });
+
+    if(error){
+      showStatus($("authStatus"),error.message,true);
+    }else if(data.session){
+      $("authModal").style.display = "none";
+      await updateUser();
+    }else{
+      showStatus($("authStatus"),"Account created. Duba email ɗinka idan an nemi verification.");
+    }
+  }
+
+  $("authSubmit").disabled = false;
+}
+
+async function sendExchangeRequest(){
+  const status = $("requestStatus");
+
+  if(!currentUser){
+    showStatus(status,"Da farko ka yi Login.",true);
+    $("authModal").style.display = "flex";
+    return;
+  }
+
+  const name = $("customerName").value.trim();
+  const phone = $("customerPhone").value.trim();
+  const direction = $("direction").value;
+  const sendAmount = Number($("amount").value || 0);
+  const rate = rates[direction];
+  const receiveAmount = sendAmount * rate;
+
+  if(!phone || !sendAmount || sendAmount <= 0){
+    showStatus(status,"Cika phone da amount daidai.",true);
+    return;
+  }
+
+  const {error} = await db.from("exchange_requests").insert({
+    user_id: currentUser.id,
+    customer_name: name || currentUser.email,
+    customer_phone: phone,
+    direction,
+    send_amount: sendAmount,
+    receive_amount: receiveAmount,
+    rate,
+    status:"pending"
+  });
+
+  if(error){
+    showStatus(status,error.message,true);
+  }else{
+    showStatus(status,"An tura Exchange Request successfully.");
+    $("amount").value = "";
+    await loadMyRequests();
+    if(isAdmin) await loadAdminRequests();
+  }
+}
+
+async function loadMyRequests(){
+  if(!currentUser){
+    $("myRequests").innerHTML = "Login domin ganin requests ɗinka.";
+    return;
+  }
+
+  const {data,error} = await db
+    .from("exchange_requests")
+    .select("*")
+    .eq("user_id",currentUser.id)
+    .order("created_at",{ascending:false});
+
+  if(error){
+    $("myRequests").textContent = error.message;
+    return;
+  }
+
+  if(!data.length){
+    $("myRequests").innerHTML = '<div class="muted">Babu request tukuna.</div>';
+    return;
+  }
+
+  $("myRequests").innerHTML = data.map(r => `
+    <div class="request">
+      <b>Request #${escapeHtml(r.id)}</b><br>
+      ${escapeHtml(r.direction)} • Send: ${escapeHtml(r.send_amount)} • Receive: ${escapeHtml(r.receive_amount)}<br>
+      Status: <span class="badge ${escapeHtml(r.status)}">${escapeHtml(r.status)}</span>
+      ${r.admin_notes ? `<p class="muted">Admin Note: ${escapeHtml(r.admin_notes)}</p>` : ""}
+    </div>
+  `).join("");
+}
+
+async function saveRates(){
+  if(!isAdmin) return;
+
+  const xof = Number($("adminXofNgn").value);
+  const ngn = Number($("adminNgnXof").value);
+
+  if(!xof || !ngn || xof <= 0 || ngn <= 0){
+    showStatus($("rateAdminStatus"),"Saka rates masu inganci.",true);
+    return;
+  }
+
+  const rows = [
+    {from_currency:"XOF",to_currency:"NGN",rate:xof,is_active:true},
+    {from_currency:"NGN",to_currency:"XOF",rate:ngn,is_active:true}
+  ];
+
+  const {error} = await db
+    .from("exchange_rates")
+    .upsert(rows,{onConflict:"from_currency,to_currency"});
+
+  if(error){
+    showStatus($("rateAdminStatus"),error.message,true);
+  }else{
+    rates.XOF_NGN=xof;
+    rates.NGN_XOF=ngn;
+    calculate();
+    showStatus($("rateAdminStatus"),"Rates sun canza successfully.");
+  }
+}
+
+async function savePaymentAccount(){
+  if(!isAdmin) return;
+
+  const accountName = $("paymentAccountName").value.trim();
+  const accountNumber = $("paymentAccountNumber").value.trim();
+  const bankName = $("paymentBankName").value.trim();
+  const paymentType = $("paymentType").value;
+
+  if(!accountName || !accountNumber){
+    showStatus($("paymentAccountStatus"),"Cika Account Name da Account Number.",true);
+    return;
+  }
+
+  const {error} = await db.from("payment_accounts").insert({
+    account_name:accountName,
+    account_number:accountNumber,
+    bank_name:bankName,
+    payment_type:paymentType,
+    is_active:true
+  });
+
+  if(error){
+    showStatus($("paymentAccountStatus"),error.message,true);
+  }else{
+    showStatus($("paymentAccountStatus"),"An ajiye payment account.");
+    $("paymentAccountName").value="";
+    $("paymentAccountNumber").value="";
+    $("paymentBankName").value="";
+    await loadPaymentAccounts();
+  }
+}
+
+async function loadPaymentAccounts(){
+  const {data,error} = await db
+    .from("payment_accounts")
+    .select("*")
+    .eq("is_active",true)
+    .order("created_at",{ascending:false});
+
+  if(error){
+    $("paymentAccounts").textContent = error.message;
+    return;
+  }
+
+  if(!data.length){
+    $("paymentAccounts").innerHTML = '<div class="muted">Babu payment account da aka saka.</div>';
+    $("adminPaymentAccounts").innerHTML = "";
+    return;
+  }
+
+  $("paymentAccounts").innerHTML = data.map(a => `
+    <div class="request">
+      <b>${escapeHtml(a.account_name)}</b><br>
+      Account: ${escapeHtml(a.account_number)}<br>
+      ${a.bank_name ? "Bank: " + escapeHtml(a.bank_name) + "<br>" : ""}
+      Type: ${escapeHtml(a.payment_type)}
+    </div>
+  `).join("");
+
+  $("adminPaymentAccounts").innerHTML = `
+    <h3 style="margin-top:20px">Existing Accounts</h3>
+    ${data.map(a => `
+      <div class="request">
+        <b>${escapeHtml(a.account_name)}</b><br>
+        ${escapeHtml(a.account_number)}<br>
+        ${escapeHtml(a.bank_name || "")}
+      </div>
+    `).join("")}
+  `;
+}
 
 async function loadAdminRequests(){
+  if(!isAdmin){
+    $("adminRequests").innerHTML = "";
+    return;
+  }
 
-  const box =
-    document.getElementById(
-      "adminRequests"
-    );
-
-
-  box.innerHTML =
-    "Loading requests...";
-
-
-  const {data,error} =
-    await db
-      .from("exchange_requests")
-      .select(`
-        id,
-        customer_name,
-        customer_phone,
-        direction,
-        send_amount,
-        receive_amount,
-        rate,
-        status,
-        admin_notes,
-        created_at
-      `)
-      .order(
-        "created_at",
-        {
-          ascending:false
-        }
-      );
-
+  const {data,error} = await db
+    .from("exchange_requests")
+    .select("*")
+    .order("created_at",{ascending:false});
 
   if(error){
-
-    box.innerHTML =
-      "❌ An samu matsala: "
-      + error.message;
-
+    $("adminRequests").textContent = error.message;
     return;
-
   }
 
-
-  if(
-    !data ||
-    data.length === 0
-  ){
-
-    box.innerHTML =
-      "Babu Exchange Request tukuna.";
-
+  if(!data.length){
+    $("adminRequests").innerHTML = '<div class="muted">Babu requests.</div>';
     return;
-
   }
 
+  $("adminRequests").innerHTML = data.map(r => `
+    <div class="request">
+      <b>Request #${escapeHtml(r.id)}</b><br>
+      Customer: ${escapeHtml(r.customer_name || "-")}<br>
+      Phone: ${escapeHtml(r.customer_phone)}<br>
+      Direction: ${escapeHtml(r.direction)}<br>
+      Send: ${escapeHtml(r.send_amount)}<br>
+      Receive: ${escapeHtml(r.receive_amount)}<br>
+      Rate: ${escapeHtml(r.rate)}<br>
+      Status: <span class="badge ${escapeHtml(r.status)}">${escapeHtml(r.status)}</span>
 
-  box.innerHTML =
-    data.map(
-      req => `
+      <label>Admin Note</label>
+      <input id="note_${r.id}" value="${escapeHtml(r.admin_notes || "")}" placeholder="Rubuta note">
 
-      <div class="admin-request">
+      <label>Change Status</label>
+      <select id="status_${r.id}">
+        <option value="pending" ${r.status==="pending"?"selected":""}>Pending</option>
+        <option value="processing" ${r.status==="processing"?"selected":""}>Processing</option>
+        <option value="completed" ${r.status==="completed"?"selected":""}>Completed</option>
+        <option value="cancelled" ${r.status==="cancelled"?"selected":""}>Cancelled</option>
+      </select>
 
-        <b>
-          Request #${req.id}
-        </b>
-
-        <p>
-          <b>Customer:</b>
-          ${escapeHtml(
-            req.customer_name || "-"
-          )}
-        </p>
-
-        <p>
-          <b>Phone:</b>
-          ${escapeHtml(
-            req.customer_phone || "-"
-          )}
-        </p>
-
-        <p>
-          <b>Direction:</b>
-          ${escapeHtml(
-            req.direction || "-"
-          )}
-        </p>
-
-        <p>
-          <b>Send:</b>
-          ${Number(
-            req.send_amount
-          ).toLocaleString()}
-        </p>
-
-        <p>
-          <b>Receive:</b>
-          ${Number(
-            req.receive_amount
-          ).toLocaleString()}
-        </p>
-
-        <p>
-          <b>Rate:</b>
-          ${req.rate}
-        </p>
-
-        <label>
-          Status
-        </label>
-
-        <select
-          id="status-${req.id}"
-        >
-
-          <option
-            value="pending"
-            ${
-              req.status === "pending"
-              ? "selected"
-              : ""
-            }
-          >
-            Pending
-          </option>
-
-          <option
-            value="processing"
-            ${
-              req.status === "processing"
-              ? "selected"
-              : ""
-            }
-          >
-            Processing
-          </option>
-
-          <option
-            value="completed"
-            ${
-              req.status === "completed"
-              ? "selected"
-              : ""
-            }
-          >
-            Completed
-          </option>
-
-          <option
-            value="cancelled"
-            ${
-              req.status === "cancelled"
-              ? "selected"
-              : ""
-            }
-          >
-            Cancelled
-          </option>
-
-        </select>
-
-
-        <label>
-          Admin Note
-        </label>
-
-        <input
-          id="note-${req.id}"
-          value="${escapeHtml(
-            req.admin_notes || ""
-          )}"
-          placeholder="Rubuta note..."
-        >
-
-
-        <button
-          class="admin-save"
-          onclick="updateExchangeRequest(${req.id})"
-        >
-          Save Update
-        </button>
-
-      </div>
-
-    `
-    ).join("");
-
+      <button class="submit" onclick="updateRequest(${Number(r.id)})">💾 Save Update</button>
+    </div>
+  `).join("");
 }
 
+async function updateRequest(id){
+  if(!isAdmin) return;
 
-/* =========================
-   UPDATE EXCHANGE REQUEST
-========================= */
+  const status = $("status_"+id).value;
+  const admin_notes = $("note_"+id).value;
 
-async function updateExchangeRequest(id){
-
-  const status =
-    document.getElementById(
-      "status-" + id
-    ).value;
-
-
-  const admin_notes =
-    document.getElementById(
-      "note-" + id     ).value;
-
-
-  const {error} =
-    await db
-      .from("exchange_requests")
-      .update({
-        status: status,
-        admin_notes: admin_notes
-      })
-      .eq("id", id);
-
+  const {error} = await db
+    .from("exchange_requests")
+    .update({status,admin_notes})
+    .eq("id",id);
 
   if(error){
-
-    alert(
-      "❌ An samu matsala: "
-      + error.message
-    );
-
-    return;
+    alert(error.message);
+  }else{
+    await loadAdminRequests();
+    await loadMyRequests();
   }
+}
 
+$("direction").addEventListener("change",calculate);
+$("amount").addEventListener("input",calculate);
 
-  alert(
-    "✅ An sabunta Exchange Request."
-  );
+$("loginButton").addEventListener("click",openAuth);
+$("closeModal").addEventListener("click",() => $("authModal").style.display="none");
+$("authSubmit").addEventListener("click",submitAuth);
 
-  loadAdminRequests();
+$("toggleAuth").addEventListener("click",() => {
+  loginMode = !loginMode;
+  $("authTitle").textContent = loginMode ? "Login" : "Create Account";
+  $("authSubmit").textContent = loginMode ? "Login" : "Create Account";
+  $("toggleAuth").textContent = loginMode ? "Create Account" : "Back to Login";
+  $("authStatus").className = "status";
+});
 
-  }
-  
+$("requestButton").addEventListener("click",sendExchangeRequest);
+$("saveRatesButton").addEventListener("click",saveRates);
+$("savePaymentButton").addEventListener("click",savePaymentAccount);
+
+$("customerTab").addEventListener("click",() => {
+  $("customerTab").classList.add("active");
+  $("adminTab").classList.remove("active");
+  $("customerSection").classList.remove("hidden");
+  $("adminSection").classList.add("hidden");
+});
+
+$("adminTab").addEventListener("click",async() => {
+  if(!isAdmin) return;
+  $("adminTab").classList.add("active");
+  $("customerTab").classList.remove("active");
+  $("customerSection").classList.add("hidden");
+  $("adminSection").classList.remove("hidden");
+
+  $("adminXofNgn").value = rates.XOF_NGN;
+  $("adminNgnXof").value = rates.NGN_XOF;
+
+  await loadAdminRequests();
+  await loadPaymentAccounts();
+});
+
+db.auth.onAuthStateChange(async() => {
+  setTimeout(updateUser,0);
+});
+
+(async function init(){
+  await loadRates();
+  await loadPaymentAccounts();
+  await updateUser();
+})();
+</script>
+
+</body>
+                                                   </html>
+                                                   
