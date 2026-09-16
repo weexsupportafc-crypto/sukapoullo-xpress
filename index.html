@@ -426,7 +426,51 @@ footer{
     <!-- CHANGE RATE -->
 
     <div
-      class="card"
+   <div
+  class="card"
+  style="background:#f8fafc"
+>
+  <h3>🏦 Payment Accounts</h3>
+
+  <label>Account Name</label>
+  <input
+    type="text"
+    id="paymentAccountName"
+    placeholder="Misali: SUKAPOULLO XPRESS"
+  >
+
+  <label>Account Number</label>
+  <input
+    type="text"
+    id="paymentAccountNumber"
+    placeholder="Lambar Account"
+  >
+
+  <label>Bank Name</label>
+  <input
+    type="text"
+    id="paymentBankName"
+    placeholder="Sunan Bank"
+  >
+
+  <label>Payment Type</label>
+  <select id="paymentType">
+    <option value="bank">Bank</option>
+    <option value="mobile_money">Mobile Money</option>
+  </select>
+
+  <button
+    class="submit"
+    onclick="savePaymentAccount()"
+  >
+    💾 Save Account
+  </button>
+
+  <div
+    class="status"
+    id="paymentAccountStatus"
+  ></div>
+    </div>   class="card"
       style="background:#f8fafc"
     >
 
