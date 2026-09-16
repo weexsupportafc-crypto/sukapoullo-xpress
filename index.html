@@ -234,6 +234,7 @@ footer{
 
   <div>
     <span id="userText" class="user"></span>
+
     <button class="login-btn" id="loginButton">
       Login
     </button>
@@ -241,12 +242,17 @@ footer{
 </header>
 
 <section class="hero">
+
   <h1>CFA ↔ NGN</h1>
+
   <h3>FAST • SECURE • SIMPLE</h3>
+
   <p>Exchange Online</p>
+
   <p>
     Fast and secure currency exchange service for CFA and Nigerian Naira.
   </p>
+
 </section>
 
 <main class="container">
@@ -254,13 +260,21 @@ footer{
   <!-- CALCULATOR -->
 
   <div class="card">
+
     <h2>💱 Exchange Calculator</h2>
 
     <label>Direction</label>
 
     <select id="direction">
-      <option value="XOF_NGN">CFA → NGN</option>
-      <option value="NGN_XOF">NGN → CFA</option>
+
+      <option value="XOF_NGN">
+        CFA → NGN
+      </option>
+
+      <option value="NGN_XOF">
+        NGN → CFA
+      </option>
+
     </select>
 
     <label>Amount</label>
@@ -273,22 +287,30 @@ footer{
     >
 
     <div class="receive">
+
       YOU RECEIVE
 
-      <strong id="receive">0</strong>
+      <strong id="receive">
+        0
+      </strong>
 
-      <span id="receiveCurrency">NGN</span>
+      <span id="receiveCurrency">
+        NGN
+      </span>
 
       <p id="rateText">
         Rate loading...
       </p>
+
     </div>
+
   </div>
 
 
   <!-- EXCHANGE REQUEST -->
 
   <div class="card">
+
     <h2>📝 Exchange Request</h2>
 
     <p>
@@ -306,8 +328,15 @@ footer{
     <label>Direction</label>
 
     <select id="requestDirection">
-      <option value="XOF_NGN">CFA → NGN</option>
-      <option value="NGN_XOF">NGN → CFA</option>
+
+      <option value="XOF_NGN">
+        CFA → NGN
+      </option>
+
+      <option value="NGN_XOF">
+        NGN → CFA
+      </option>
+
     </select>
 
     <label>Amount</label>
@@ -320,18 +349,31 @@ footer{
     >
 
     <div class="receive">
+
       YOU WILL RECEIVE
 
-      <strong id="requestReceive">0</strong>
+      <strong id="requestReceive">
+        0
+      </strong>
 
-      <span id="requestCurrency">NGN</span>
+      <span id="requestCurrency">
+        NGN
+      </span>
+
     </div>
 
-    <button class="submit" id="submitRequest">
+    <button
+      class="submit"
+      id="submitRequest"
+    >
       Submit Exchange Request
     </button>
 
-    <div class="status" id="requestStatus"></div>
+    <div
+      class="status"
+      id="requestStatus"
+    ></div>
+
   </div>
 
 
@@ -379,39 +421,58 @@ footer{
     <p>
       Exchange Requests
     </p>
-<div class="card" style="background:#f8fafc">
 
-  <h3>💱 Change Rate</h3>
 
-  <label>CFA → NGN</label>
-  <input
-    type="number"
-    id="adminXofNgn"
-    step="0.000001"
-    placeholder="0.76"
-  >
+    <!-- CHANGE RATE -->
 
-  <label>NGN → CFA</label>
-  <input
-    type="number"
-    id="adminNgnXof"
-    step="0.000001"
-    placeholder="1.31"
-  >
+    <div
+      class="card"
+      style="background:#f8fafc"
+    >
 
-  <button
-    class="submit"
-    onclick="saveRates()"
-  >
-    💾 Save Rate
-  </button>
+      <h3>
+        💱 Change Rate
+      </h3>
 
-  <div
-    class="status"
-    id="rateAdminStatus"
-  ></div>
+      <label>
+        CFA → NGN
+      </label>
 
-</div>
+      <input
+        type="number"
+        id="adminXofNgn"
+        step="0.000001"
+        placeholder="0.76"
+      >
+
+      <label>
+        NGN → CFA
+      </label>
+
+      <input
+        type="number"
+        id="adminNgnXof"
+        step="0.000001"
+        placeholder="1.31"
+      >
+
+      <button
+        class="submit"
+        onclick="saveRates()"
+      >
+        💾 Save Rate
+      </button>
+
+      <div
+        class="status"
+        id="rateAdminStatus"
+      ></div>
+
+    </div>
+
+
+    <!-- ADMIN REQUESTS -->
+
     <div id="adminRequests">
       Loading requests...
     </div>
@@ -438,13 +499,20 @@ footer{
 
 <!-- LOGIN MODAL -->
 
-<div class="modal" id="authModal">
+<div
+  class="modal"
+  id="authModal"
+>
 
   <div class="modal-box">
 
-    <h2>🔐 Customer Login</h2>
+    <h2>
+      🔐 Customer Login
+    </h2>
 
-    <label>Email</label>
+    <label>
+      Email
+    </label>
 
     <input
       type="email"
@@ -452,7 +520,9 @@ footer{
       placeholder="Your email"
     >
 
-    <label>Password</label>
+    <label>
+      Password
+    </label>
 
     <input
       type="password"
@@ -504,9 +574,11 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_X89kCKmA-u9DRwQvPbsqYA_Jvlii702";
 
-const { createClient } = supabase;
+const { createClient } =
+supabase;
 
-const db = createClient(
+const db =
+createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
@@ -517,48 +589,78 @@ const db = createClient(
 ========================= */
 
 let rates = {
+
   XOF_NGN: 0.76,
+
   NGN_XOF: 1.31
+
 };
 
 
 const direction =
-document.getElementById("direction");
+document.getElementById(
+  "direction"
+);
 
 const amount =
-document.getElementById("amount");
+document.getElementById(
+  "amount"
+);
 
 const receive =
-document.getElementById("receive");
+document.getElementById(
+  "receive"
+);
 
 const receiveCurrency =
-document.getElementById("receiveCurrency");
+document.getElementById(
+  "receiveCurrency"
+);
 
 const rateText =
-document.getElementById("rateText");
+document.getElementById(
+  "rateText"
+);
 
 
 const requestDirection =
-document.getElementById("requestDirection");
+document.getElementById(
+  "requestDirection"
+);
 
 const requestAmount =
-document.getElementById("requestAmount");
+document.getElementById(
+  "requestAmount"
+);
 
 const requestReceive =
-document.getElementById("requestReceive");
+document.getElementById(
+  "requestReceive"
+);
 
 const requestCurrency =
-document.getElementById("requestCurrency");
+document.getElementById(
+  "requestCurrency"
+);
 
+
+/* =========================
+   LOAD RATES
+========================= */
 
 async function loadRates(){
 
-  const {data,error} = await db
-    .from("exchange_rates")
-    .select(
-      "from_currency,to_currency,rate"
-    )
-    .eq("is_active",true);
+  const {data,error} =
+    await db
+      .from("exchange_rates")
+      .select(
+        "from_currency,to_currency,rate"
+      )
+      .eq(
+        "is_active",
+        true
+      );
+
 
   if(error){
 
@@ -566,6 +668,7 @@ async function loadRates(){
 
     return;
   }
+
 
   data.forEach(row => {
 
@@ -579,6 +682,7 @@ async function loadRates(){
 
     }
 
+
     if(
       row.from_currency === "NGN" &&
       row.to_currency === "XOF"
@@ -591,9 +695,11 @@ async function loadRates(){
 
   });
 
+
   updateCalculator();
 
   updateRequestCalculator();
+
 }
 
 
@@ -612,10 +718,14 @@ function updateCalculator(){
   const result =
     value * rates[selected];
 
+
   receive.textContent =
     result.toLocaleString();
 
-  if(selected === "XOF_NGN"){
+
+  if(
+    selected === "XOF_NGN"
+  ){
 
     receiveCurrency.textContent =
       "NGN";
@@ -636,13 +746,16 @@ function updateCalculator(){
       + " CFA";
 
   }
+
 }
 
 
 function updateRequestCalculator(){
 
   const value =
-    Number(requestAmount.value) || 0;
+    Number(
+      requestAmount.value
+    ) || 0;
 
   const selected =
     requestDirection.value;
@@ -650,10 +763,14 @@ function updateRequestCalculator(){
   const result =
     value * rates[selected];
 
+
   requestReceive.textContent =
     result.toLocaleString();
 
-  if(selected === "XOF_NGN"){
+
+  if(
+    selected === "XOF_NGN"
+  ){
 
     requestCurrency.textContent =
       "NGN";
@@ -664,6 +781,7 @@ function updateRequestCalculator(){
       "CFA";
 
   }
+
 }
 
 
@@ -693,10 +811,14 @@ requestAmount.addEventListener(
 ========================= */
 
 const modal =
-document.getElementById("authModal");
+document.getElementById(
+  "authModal"
+);
 
 
-document.getElementById("loginButton")
+document.getElementById(
+  "loginButton"
+)
 .addEventListener(
   "click",
   async()=>{
@@ -704,9 +826,14 @@ document.getElementById("loginButton")
     const {data} =
       await db.auth.getSession();
 
+
     if(data.session){
 
       await db.auth.signOut();
+
+      updateUser();
+
+      checkAdmin();
 
     }else{
 
@@ -719,7 +846,9 @@ document.getElementById("loginButton")
 );
 
 
-document.getElementById("closeModal")
+document.getElementById(
+  "closeModal"
+)
 .addEventListener(
   "click",
   ()=>{
@@ -733,21 +862,29 @@ document.getElementById("closeModal")
 
 /* REGISTER */
 
-document.getElementById("register")
+document.getElementById(
+  "register"
+)
 .addEventListener(
   "click",
   async()=>{
 
     const email =
       document
-        .getElementById("email")
+        .getElementById(
+          "email"
+        )
         .value
         .trim();
 
+
     const password =
       document
-        .getElementById("password")
+        .getElementById(
+          "password"
+        )
         .value;
+
 
     const status =
       document.getElementById(
@@ -755,7 +892,10 @@ document.getElementById("register")
       );
 
 
-    if(!email || !password){
+    if(
+      !email ||
+      !password
+    ){
 
       status.style.display =
         "block";
@@ -764,6 +904,7 @@ document.getElementById("register")
         "Cika email da password.";
 
       return;
+
     }
 
 
@@ -771,6 +912,7 @@ document.getElementById("register")
       await db.auth.signUp({
 
         email,
+
         password
 
       });
@@ -798,21 +940,29 @@ document.getElementById("register")
 
 /* LOGIN */
 
-document.getElementById("login")
+document.getElementById(
+  "login"
+)
 .addEventListener(
   "click",
   async()=>{
 
     const email =
       document
-        .getElementById("email")
+        .getElementById(
+          "email"
+        )
         .value
         .trim();
 
+
     const password =
       document
-        .getElementById("password")
+        .getElementById(
+          "password"
+        )
         .value;
+
 
     const status =
       document.getElementById(
@@ -824,6 +974,7 @@ document.getElementById("login")
       await db.auth.signInWithPassword({
 
         email,
+
         password
 
       });
@@ -856,17 +1007,21 @@ document.getElementById("login")
 );
 
 
-/* USER */
+/* =========================
+   USER
+========================= */
 
 async function updateUser(){
 
   const {data} =
     await db.auth.getSession();
 
+
   const userText =
     document.getElementById(
       "userText"
     );
+
 
   const loginButton =
     document.getElementById(
@@ -911,14 +1066,21 @@ document.getElementById(
         "requestStatus"
       );
 
+
     const phone =
       document
-        .getElementById("phone")
+        .getElementById(
+          "phone"
+        )
         .value
         .trim();
 
+
     const value =
-      Number(requestAmount.value);
+      Number(
+        requestAmount.value
+      );
+
 
     const selected =
       requestDirection.value;
@@ -937,6 +1099,7 @@ document.getElementById(
         "Da farko ka yi Login kafin ka aika request.";
 
       return;
+
     }
 
 
@@ -949,10 +1112,14 @@ document.getElementById(
         "Saka phone number ɗinka.";
 
       return;
+
     }
 
 
-    if(!value || value <= 0){
+    if(
+      !value ||
+      value <= 0
+    ){
 
       status.style.display =
         "block";
@@ -961,6 +1128,7 @@ document.getElementById(
         "Saka amount mai inganci.";
 
       return;
+
     }
 
 
@@ -970,7 +1138,9 @@ document.getElementById(
 
     const {error} =
       await db
-        .from("exchange_requests")
+        .from(
+          "exchange_requests"
+        )
         .insert({
 
           user_id:
@@ -1017,11 +1187,15 @@ document.getElementById(
       status.textContent =
         "✅ An aika Exchange Request ɗinka successfully. Za mu duba shi.";
 
+
       document.getElementById(
         "phone"
       ).value = "";
 
-      requestAmount.value = "";
+
+      requestAmount.value =
+        "";
+
 
       updateRequestCalculator();
 
@@ -1037,15 +1211,36 @@ document.getElementById(
 
 function escapeHtml(value){
 
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  return String(
+    value ?? ""
+  )
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+  .replace(
+    /</g,
+    "&lt;"
+  )
+  .replace(
+    />/g,
+    "&gt;"
+  )
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+  .replace(
+    /'/g,
+    "&#039;"
+  );
 
 }
 
+
+/* =========================
+   ADMIN CHECK
+========================= */
 
 async function checkAdmin(){
 
@@ -1065,6 +1260,7 @@ async function checkAdmin(){
       "none";
 
     return;
+
   }
 
 
@@ -1086,10 +1282,12 @@ async function checkAdmin(){
       error
     );
 
+
     adminDashboard.style.display =
       "none";
 
     return;
+
   }
 
 
@@ -1099,6 +1297,7 @@ async function checkAdmin(){
       "none";
 
     return;
+
   }
 
 
@@ -1106,10 +1305,21 @@ async function checkAdmin(){
     "block";
 
 
+  /* LOAD CURRENT ADMIN RATES */
+
+  loadAdminRates();
+
+
+  /* LOAD REQUESTS */
+
   loadAdminRequests();
 
 }
 
+
+/* =========================
+   LOAD ADMIN REQUESTS
+========================= */
 
 async function loadAdminRequests(){
 
@@ -1153,24 +1363,32 @@ async function loadAdminRequests(){
       + error.message;
 
     return;
+
   }
 
 
-  if(!data || data.length === 0){
+  if(
+    !data ||
+    data.length === 0
+  ){
 
     box.innerHTML =
       "Babu Exchange Request tukuna.";
 
     return;
+
   }
 
 
   box.innerHTML =
-    data.map(req => `
+    data.map(
+      req => `
 
       <div class="admin-request">
 
-        <b>Request #${req.id}</b>
+        <b>
+          Request #${req.id}
+        </b>
 
         <p>
           <b>Customer:</b>
@@ -1212,34 +1430,54 @@ async function loadAdminRequests(){
           ${req.rate}
         </p>
 
-        <label>Status</label>
+        <label>
+          Status
+        </label>
 
-        <select id="status-${req.id}">
+        <select
+          id="status-${req.id}"
+        >
 
           <option
             value="pending"
-            ${req.status==="pending"?"selected":""}
+            ${
+              req.status === "pending"
+              ? "selected"
+              : ""
+            }
           >
             Pending
           </option>
 
           <option
             value="processing"
-            ${req.status==="processing"?"selected":""}
+            ${
+              req.status === "processing"
+              ? "selected"
+              : ""
+            }
           >
             Processing
           </option>
 
           <option
             value="completed"
-            ${req.status==="completed"?"selected":""}
+            ${
+              req.status === "completed"
+              ? "selected"
+              : ""
+            }
           >
             Completed
           </option>
 
           <option
             value="cancelled"
-            ${req.status==="cancelled"?"selected":""}
+            ${
+              req.status === "cancelled"
+              ? "selected"
+              : ""
+            }
           >
             Cancelled
           </option>
@@ -1247,7 +1485,9 @@ async function loadAdminRequests(){
         </select>
 
 
-        <label>Admin Note</label>
+        <label>
+          Admin Note
+        </label>
 
         <input
           id="note-${req.id}"
@@ -1267,10 +1507,15 @@ async function loadAdminRequests(){
 
       </div>
 
-    `).join("");
+    `
+    ).join("");
 
 }
 
+
+/* =========================
+   UPDATE EXCHANGE REQUEST
+========================= */
 
 async function updateExchangeRequest(id){
 
@@ -1283,240 +1528,4 @@ async function updateExchangeRequest(id){
   const admin_notes =
     document.getElementById(
       "note-" + id
-    ).value;
-
-
-  const {error} =
-    await db
-      .from("exchange_requests")
-      .update({
-
-        status,
-        admin_notes
-
-      })
-      .eq("id",id);
-
-
-  if(error){
-
-    alert(
-      "An samu matsala: "
-      + error.message
-    );
-
-    return;
-  }
-
-
-  alert(
-    "✅ An sabunta Request #" + id
-  );
-
-
-  loadAdminRequests();
-
-}
-async function loadAdminRates(){
-
-  const {data,error} =
-    await db
-      .from("exchange_rates")
-      .select("from_currency,to_currency,rate")
-      .in("from_currency",["XOF","NGN"])
-      .in("to_currency",["NGN","XOF"]);
-
-  if(error){
-    console.log(error);
-    return;
-  }
-
-  data.forEach(row => {
-
-    if(
-      row.from_currency === "XOF" &&
-      row.to_currency === "NGN"
-    ){
-
-      document.getElementById(
-        "adminXofNgn"
-      ).value = row.rate;
-
-    }
-
-    if(
-      row.from_currency === "NGN" &&
-      row.to_currency === "XOF"
-    ){
-
-      document.getElementById(
-        "adminNgnXof"
-      ).value = row.rate;
-
-    }
-
-  });
-
-}
-
-
-async function saveRates(){
-
-  const status =
-    document.getElementById(
-      "rateAdminStatus"
-    );
-
-  const xofNgn =
-    Number(
-      document.getElementById(
-        "adminXofNgn"
-      ).value
-    );
-
-  const ngnXof =
-    Number(
-      document.getElementById(
-        "adminNgnXof"
-      ).value
-    );
-
-
-  if(
-    !xofNgn ||
-    xofNgn <= 0 ||
-    !ngnXof ||
-    ngnXof <= 0
-  ){
-
-    status.style.display = "block";
-
-    status.textContent =
-      "Saka rates masu inganci.";
-
-    return;
-  }
-
-
-  const {data:sessionData} =
-    await db.auth.getSession();
-
-
-  if(!sessionData.session){
-
-    status.style.display = "block";
-
-    status.textContent =
-      "Sai ka yi Login.";
-
-    return;
-  }
-
-
-  const {data:admin,error:adminError} =
-    await db
-      .from("admin_users")
-      .select("user_id")
-      .eq(
-        "user_id",
-        sessionData.session.user.id
-      )
-      .maybeSingle();
-
-
-  if(adminError || !admin){
-
-    status.style.display = "block";
-
-    status.textContent =
-      "Ba ka da izinin Admin.";
-
-    return;
-  }
-
-
-  const {error} =
-    await db
-      .from("exchange_rates")
-      .upsert(
-        [
-          {
-            from_currency:"XOF",
-            to_currency:"NGN",
-            rate:xofNgn,
-            is_active:true
-          },
-          {
-            from_currency:"NGN",
-            to_currency:"XOF",
-            rate:ngnXof,
-            is_active:true
-          }
-        ],
-        {
-          onConflict:
-            "from_currency,to_currency"
-        }
-      );
-
-
-  status.style.display = "block";
-
-
-  if(error){
-
-    status.textContent =
-      "❌ An samu matsala: "
-      + error.message;
-
-    return;
-  }
-
-
-  rates.XOF_NGN = xofNgn;
-  rates.NGN_XOF = ngnXof;
-
-
-  updateCalculator();
-  updateRequestCalculator();
-
-
-  status.textContent =
-    "✅ An sabunta rates successfully.";
-
-}
-
-/* =========================
-   START
-========================= */
-
-loadRates();
-
-updateUser();
-
-updateCalculator();
-
-updateRequestCalculator();
-
-checkAdmin();
-
-
-db.auth.onAuthStateChange(
-  ()=>{
-    
-    updateUser();
-
-    setTimeout(
-      ()=>{
-        checkAdmin();
-      },
-      300
-    );
-
-  }
-);
-
-</script>
-
-</body>
-  </html>
+  
