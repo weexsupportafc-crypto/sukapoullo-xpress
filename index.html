@@ -425,6 +425,51 @@ footer{
 
     <!-- CHANGE RATE -->
 
+<div
+  class="card"
+  style="background:#f8fafc"
+>
+
+  <h3>
+    💱 Change Rate
+  </h3>
+
+  <label>
+    CFA → NGN
+  </label>
+
+  <input
+    type="number"
+    id="adminXofNgn"
+    step="0.000001"
+    placeholder="0.76"
+  >
+
+  <label>
+    NGN → CFA
+  </label>
+
+  <input
+    type="number"
+    id="adminNgnXof"
+    step="0.000001"
+    placeholder="1.31"
+  >
+
+  <button
+    class="submit"
+    onclick="saveRates()"
+  >
+    💾 Save Rate
+  </button>
+
+  <div
+    class="status"
+    id="rateAdminStatus"
+  ></div>
+
+</div>
+
     <div
    <div
   class="card"
