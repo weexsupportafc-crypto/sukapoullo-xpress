@@ -1317,7 +1317,174 @@ async function updateExchangeRequest(id){
   loadAdminRequests();
 
 }
+async function loadAdminRates(){
 
+  const {data,error} =
+    await db
+      .from("exchange_rates")
+      .select("from_currency,to_currency,rate")
+      .in("from_currency",["XOF","NGN"])
+      .in("to_currency",["NGN","XOF"]);
+
+  if(error){
+    console.log(error);
+    return;
+  }
+
+  data.forEach(row => {
+
+    if(
+      row.from_currency === "XOF" &&
+      row.to_currency === "NGN"
+    ){
+
+      document.getElementById(
+        "adminXofNgn"
+      ).value = row.rate;
+
+    }
+
+    if(
+      row.from_currency === "NGN" &&
+      row.to_currency === "XOF"
+    ){
+
+      document.getElementById(
+        "adminNgnXof"
+      ).value = row.rate;
+
+    }
+
+  });
+
+}
+
+
+async function saveRates(){
+
+  const status =
+    document.getElementById(
+      "rateAdminStatus"
+    );
+
+  const xofNgn =
+    Number(
+      document.getElementById(
+        "adminXofNgn"
+      ).value
+    );
+
+  const ngnXof =
+    Number(
+      document.getElementById(
+        "adminNgnXof"
+      ).value
+    );
+
+
+  if(
+    !xofNgn ||
+    xofNgn <= 0 ||
+    !ngnXof ||
+    ngnXof <= 0
+  ){
+
+    status.style.display = "block";
+
+    status.textContent =
+      "Saka rates masu inganci.";
+
+    return;
+  }
+
+
+  const {data:sessionData} =
+    await db.auth.getSession();
+
+
+  if(!sessionData.session){
+
+    status.style.display = "block";
+
+    status.textContent =
+      "Sai ka yi Login.";
+
+    return;
+  }
+
+
+  const {data:admin,error:adminError} =
+    await db
+      .from("admin_users")
+      .select("user_id")
+      .eq(
+        "user_id",
+        sessionData.session.user.id
+      )
+      .maybeSingle();
+
+
+  if(adminError || !admin){
+
+    status.style.display = "block";
+
+    status.textContent =
+      "Ba ka da izinin Admin.";
+
+    return;
+  }
+
+
+  const {error} =
+    await db
+      .from("exchange_rates")
+      .upsert(
+        [
+          {
+            from_currency:"XOF",
+            to_currency:"NGN",
+            rate:xofNgn,
+            is_active:true
+          },
+          {
+            from_currency:"NGN",
+            to_currency:"XOF",
+            rate:ngnXof,
+            is_active:true
+          }
+        ],
+        {
+          onConflict:
+            "from_currency,to_currency"
+        }
+      );
+
+
+  status.style.display = "block";
+
+
+  if(error){
+
+    status.textContent =
+      "❌ An samu matsala: "
+      + error.message;
+
+    return;
+  }
+
+
+  rates.XOF_NGN = xofNgn;
+  rates.NGN_XOF = ngnXof;
+
+
+  updateCalculator();
+  updateRequestCalculator();
+
+
+  status.textContent =
+    "✅ An sabunta rates successfully.";
+
+}
 
 /* =========================
    START
