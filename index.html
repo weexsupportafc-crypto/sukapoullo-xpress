@@ -1571,5 +1571,35 @@ async function updateExchangeRequest(id){
 
   const admin_notes =
     document.getElementById(
-      "note-" + id
+      "note-" + id     ).value;
+
+
+  const {error} =
+    await db
+      .from("exchange_requests")
+      .update({
+        status: status,
+        admin_notes: admin_notes
+      })
+      .eq("id", id);
+
+
+  if(error){
+
+    alert(
+      "❌ An samu matsala: "
+      + error.message
+    );
+
+    return;
+  }
+
+
+  alert(
+    "✅ An sabunta Exchange Request."
+  );
+
+  loadAdminRequests();
+
+  }
   
