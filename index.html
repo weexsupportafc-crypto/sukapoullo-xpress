@@ -585,7 +585,8 @@ function escapeHtml(value){
     .replace(/'/g,"&#039;");
 }
 
-async function checkAdmin(){
+async function loadRates();
+updateUser();{
 
   const adminDashboard =
     document.getElementById("adminDashboard");
@@ -728,6 +729,10 @@ updateRequestCalculator();
 
 db.auth.onAuthStateChange(()=>{
   updateUser();
+
+  setTimeout(()=>{
+    checkAdmin();
+  },300);
 });
 </script>
 <!-- ADMIN DASHBOARD -->
