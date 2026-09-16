@@ -574,7 +574,153 @@ document.getElementById("submitRequest")
 });
 
 /* START */
+/* ADMIN DASHBOARD */
 
+function escapeHtml(value){
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+async function checkAdmin(){
+
+  const adminDashboard =
+    document.getElementById("adminDashboard");
+
+  const {data} =
+    await db.auth.getSession();
+
+  if(!data.session){
+    adminDashboard.style.display = "none";
+    return;
+  }
+
+  const {data:admin,error} =
+    await db
+      .from("admin_users")
+      .select("user_id")
+      .eq("user_id",data.session.user.id)
+      .maybeSingle();
+
+  if(error || !admin){
+    adminDashboard.style.display = "none";
+    return;
+  }
+
+  adminDashboard.style.display = "block";
+  loadAdminRequests();
+}
+
+async function loadAdminRequests(){
+
+  const box =
+    document.getElementById("adminRequests");
+
+  box.innerHTML = "Loading requests...";
+
+  const {data,error} =
+    await db
+      .from("exchange_requests")
+      .select(`
+        id,
+        customer_name,
+        customer_phone,
+        direction,
+        send_amount,
+        receive_amount,
+        rate,
+        status,
+        admin_notes,
+        created_at
+      `)
+      .order("created_at",{ascending:false});
+
+  if(error){
+    box.innerHTML =
+      "❌ An samu matsala: " + error.message;
+    return;
+  }
+
+  if(!data || data.length === 0){
+    box.innerHTML = "Babu Exchange Request tukuna.";
+    return;
+  }
+
+  box.innerHTML = data.map(req => `
+    <div style="border:1px solid #e5e7eb;border-radius:12px;padding:15px;margin-bottom:12px">
+
+      <b>Request #${req.id}</b>
+
+      <p><b>Customer:</b> ${escapeHtml(req.customer_name || "-")}</p>
+
+      <p><b>Phone:</b> ${escapeHtml(req.customer_phone)}</p>
+
+      <p><b>Direction:</b> ${escapeHtml(req.direction)}</p>
+
+      <p><b>Send:</b> ${Number(req.send_amount).toLocaleString()}</p>
+
+      <p><b>Receive:</b> ${Number(req.receive_amount).toLocaleString()}</p>
+
+      <p><b>Rate:</b> ${req.rate}</p>
+
+      <label>Status</label>
+
+      <select id="status-${req.id}">
+        <option value="pending" ${req.status==="pending"?"selected":""}>Pending</option>
+        <option value="processing" ${req.status==="processing"?"selected":""}>Processing</option>
+        <option value="completed" ${req.status==="completed"?"selected":""}>Completed</option>
+        <option value="cancelled" ${req.status==="cancelled"?"selected":""}>Cancelled</option>
+      </select>
+
+      <label>Admin Note</label>
+
+      <input
+        id="note-${req.id}"
+        value="${escapeHtml(req.admin_notes || "")}"
+        placeholder="Rubuta note..."
+      >
+
+      <button
+        onclick="updateExchangeRequest(${req.id})"
+        style="width:100%;margin-top:10px;background:#0b132b;color:white">
+        Save Update
+      </button>
+
+    </div>
+  `).join("");
+}
+
+async function updateExchangeRequest(id){
+
+  const status =
+    document.getElementById("status-"+id).value;
+
+  const admin_notes =
+    document.getElementById("note-"+id).value;
+
+  const {error} =
+    await db
+      .from("exchange_requests")
+      .update({
+        status,
+        admin_notes
+      })
+      .eq("id",id);
+
+  if(error){
+    alert("An samu matsala: " + error.message);
+    return;
+  }
+
+  alert("✅ An sabunta Request #" + id);
+
+  loadAdminRequests();
+}
+
+checkAdmin();
 loadRates();
 updateUser();
 updateCalculator();
@@ -584,6 +730,14 @@ db.auth.onAuthStateChange(()=>{
   updateUser();
 });
 </script>
+<!-- ADMIN DASHBOARD -->
+<div class="card" id="adminDashboard" style="display:none">
+  <h2>🛠️ Admin Dashboard</h2>
+  <p>Exchange Requests</p>
 
+  <div id="adminRequests">
+    Loading requests...
+  </div>
+</div>
 </body>
   </html>
