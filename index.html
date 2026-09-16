@@ -1,184 +1,259 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SUKAPOULLO XPRESS</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-:root{--n:#071a2b;--g:#10b981;--bg:#f5f8fb}
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:#102033}
-header{background:var(--n);color:#fff;padding:18px}
-nav{max-width:1000px;margin:auto;display:flex;justify-content:space-between;align-items:center}
-.brand{font-weight:900;font-size:18px}
-.brand span{color:var(--g)}
-main{max-width:1000px;margin:auto;padding:35px 18px}
-.hero{display:grid;grid-template-columns:1fr 1fr;gap:25px;align-items:center}
-.hero h1{font-size:52px;line-height:1;margin:0 0 15px;color:var(--n)}
-.hero h1 span{color:var(--g)}
-p{color:#64748b;line-height:1.7}
-.card{background:#fff;border:1px solid #e3e9ef;border-radius:20px;padding:22px;box-shadow:0 8px 25px #071a2b12}
-.field{width:100%;padding:13px;border:1px solid #d8e0e8;border-radius:10px;margin:7px 0 14px;font-size:16px}
-.btn{border:0;border-radius:10px;padding:12px 16px;font-weight:800;cursor:pointer}
-.primary{background:var(--g);color:#05251a}
-.dark{background:var(--n);color:#fff}
-.result{font-size:30px;font-weight:900;color:#059669}
-.features{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:25px}
-.feature{background:#fff;border-radius:16px;padding:18px;border:1px solid #e3e9ef}
-.modal{display:none;position:fixed;inset:0;background:#071a2bcc;align-items:center;justify-content:center;padding:20px;z-index:10}
-.modal-box{background:#fff;border-radius:20px;padding:25px;width:100%;max-width:420px}
-.msg{padding:10px;border-radius:8px;margin:8px 0;display:none}
-@media(max-width:750px){.hero,.features{grid-template-columns:1fr}.hero h1{font-size:42px}}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f7fa;
+  color:#111827;
+}
+header{
+  background:#0b132b;
+  color:white;
+  padding:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo{font-size:21px;font-weight:bold}
+button{
+  border:0;
+  border-radius:10px;
+  padding:12px 18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.login-btn{background:#22c55e;color:white}
+.hero{
+  background:#0b132b;
+  color:white;
+  text-align:center;
+  padding:30px 20px 45px;
+}
+.hero h1{margin:5px 0 10px;font-size:30px}
+.hero p{color:#d1d5db}
+.container{
+  max-width:650px;
+  margin:-20px auto 30px;
+  padding:0 15px;
+}
+.card{
+  background:white;
+  padding:22px;
+  border-radius:18px;
+  box-shadow:0 8px 25px #00000012;
+  margin-bottom:20px;
+}
+h2{margin-top:0}
+label{
+  display:block;
+  font-weight:bold;
+  margin:12px 0 6px;
+}
+input,select{
+  width:100%;
+  padding:13px;
+  border:1px solid #d1d5db;
+  border-radius:10px;
+  font-size:16px;
+}
+.receive{
+  background:#ecfdf5;
+  border-radius:12px;
+  padding:18px;
+  margin-top:15px;
+}
+.receive strong{
+  display:block;
+  font-size:27px;
+  color:#15803d;
+  margin-top:5px;
+}
+.submit{
+  width:100%;
+  margin-top:18px;
+  background:#16a34a;
+  color:white;
+  font-size:17px;
+}
+.status{
+  margin-top:15px;
+  padding:12px;
+  border-radius:10px;
+  display:none;
+}
+.features{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+.feature{
+  text-align:center;
+  padding:15px 5px;
+  background:#f8fafc;
+  border-radius:12px;
+}
+footer{
+  background:#0b132b;
+  color:white;
+  text-align:center;
+  padding:25px;
+}
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#0008;
+  z-index:10;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+.modal-box{
+  background:white;
+  width:100%;
+  max-width:420px;
+  border-radius:18px;
+  padding:22px;
+}
+.modal-box h2{text-align:center}
+.modal-actions{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+.modal-actions button{flex:1}
+.close{background:#e5e7eb}
+.auth-btn{background:#16a34a;color:white}
+.user{
+  font-size:13px;
+  color:#bbf7d0;
+}
+@media(max-width:500px){
+  .features{grid-template-columns:1fr}
+}
 </style>
 </head>
 
 <body>
 
 <header>
-<nav>
-<div class="brand">↔ SUKAPOULLO <span>XPRESS</span></div>
-
-<div id="accountArea">
-<button class="btn primary" onclick="openLogin()">Login</button>
-</div>
-</nav>
+  <div class="logo">↔ SUKAPOULLO XPRESS</div>
+  <div>
+    <span id="userText" class="user"></span>
+    <button class="login-btn" id="loginButton">Login</button>
+  </div>
 </header>
 
-<main>
-
 <section class="hero">
-
-<div>
-<div style="color:#059669;font-weight:900;letter-spacing:2px">
-FAST • SECURE • SIMPLE
-</div>
-
-<h1>CFA <span>↔</span> NGN<br>Exchange Online</h1>
-
-<p>
-Fast and secure currency exchange service for CFA and Nigerian Naira.
-Check the rate and prepare your exchange request from any phone or computer.
-</p>
-
-<button class="btn primary"
-onclick="document.getElementById('calc').scrollIntoView({behavior:'smooth'})">
-Check exchange rate
-</button>
-</div>
-
-<div class="card" id="calc">
-
-<h2>Exchange Calculator</h2>
-
-<label>Direction</label>
-
-<select id="dir" class="field" onchange="calc()">
-<option value="CFA_NGN">CFA → NGN</option>
-<option value="NGN_CFA">NGN → CFA</option>
-</select>
-
-<label>Amount</label>
-
-<input id="amount"
-class="field"
-type="number"
-placeholder="Enter amount"
-oninput="calc()">
-
-<div style="font-size:12px;color:#64748b">YOU RECEIVE</div>
-
-<div id="out" class="result">0</div>
-
-<small id="rate">Rate: loading…</small>
-
-<p style="font-size:13px">
-Support: <strong>+227 99 25 81 16</strong>
-</p>
-
-</div>
-
+  <h1>CFA ↔ NGN</h1>
+  <h3>FAST • SECURE • SIMPLE</h3>
+  <p>Exchange Online</p>
+  <p>Fast and secure currency exchange service for CFA and Nigerian Naira.</p>
 </section>
 
-<section class="features">
+<main class="container">
 
-<div class="feature">
-<b>⚡ Fast</b>
-<p>Submit and track exchange requests online.</p>
-</div>
+  <div class="card">
+    <h2>💱 Exchange Calculator</h2>
 
-<div class="feature">
-<b>🔒 Secure</b>
-<p>Customer accounts are protected with Supabase authentication.</p>
-</div>
+    <label>Direction</label>
+    <select id="direction">
+      <option value="XOF_NGN">CFA → NGN</option>
+      <option value="NGN_XOF">NGN → CFA</option>
+    </select>
 
-<div class="feature">
-<b>📱 Anywhere</b>
-<p>Designed for mobile, tablet and desktop access.</p>
-</div>
+    <label>Amount</label>
+    <input type="number" id="amount" placeholder="Enter amount" min="1">
 
-</section>
+    <div class="receive">
+      YOU RECEIVE
+      <strong id="receive">0</strong>
+      <span id="receiveCurrency">NGN</span>
+      <p id="rateText">Rate loading...</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📝 Exchange Request</h2>
+    <p>Login sannan ka cika bayanan da ke ƙasa domin aika request.</p>
+
+    <label>Phone Number</label>
+    <input type="tel" id="phone" placeholder="+227 ...">
+
+    <label>Direction</label>
+    <select id="requestDirection">
+      <option value="XOF_NGN">CFA → NGN</option>
+      <option value="NGN_XOF">NGN → CFA</option>
+    </select>
+
+    <label>Amount</label>
+    <input type="number" id="requestAmount" placeholder="Enter amount" min="1">
+
+    <div class="receive">
+      YOU WILL RECEIVE
+      <strong id="requestReceive">0</strong>
+      <span id="requestCurrency">NGN</span>
+    </div>
+
+    <button class="submit" id="submitRequest">
+      Submit Exchange Request
+    </button>
+
+    <div class="status" id="requestStatus"></div>
+  </div>
+
+  <div class="card">
+    <div class="features">
+      <div class="feature">⚡<br><b>Fast</b><br><small>Quick requests</small></div>
+      <div class="feature">🔒<br><b>Secure</b><br><small>Supabase protected</small></div>
+      <div class="feature">📱<br><b>Anywhere</b><br><small>Mobile friendly</small></div>
+    </div>
+  </div>
 
 </main>
 
-<footer style="background:#071a2b;color:#b9c8d7;text-align:center;padding:25px">
-SUKAPOULLO XPRESS<br>
-<small>My Nita Transfert • Amana Transfert</small>
+<footer>
+  <b>SUKAPOULLO XPRESS</b>
+  <br><br>
+  My Nita Transfert • Amana Transfert
+  <br><br>
+  Support: +227 99 25 81 16
 </footer>
 
-
 <!-- LOGIN MODAL -->
+<div class="modal" id="authModal">
+  <div class="modal-box">
+    <h2>🔐 Customer Login</h2>
 
-<div class="modal" id="loginModal">
+    <label>Email</label>
+    <input type="email" id="email" placeholder="Your email">
 
-<div class="modal-box">
+    <label>Password</label>
+    <input type="password" id="password" placeholder="Your password">
 
-<h2 id="authTitle">Customer Login</h2>
+    <div class="modal-actions">
+      <button class="auth-btn" id="login">Login</button>
+      <button class="auth-btn" id="register">Create Account</button>
+    </div>
 
-<p>Login or create your SUKAPOULLO XPRESS account.</p>
+    <button class="close" id="closeModal" style="width:100%;margin-top:10px">
+      Close
+    </button>
 
-<input
-id="email"
-class="field"
-type="email"
-placeholder="Email address">
-
-<input
-id="password"
-class="field"
-type="password"
-placeholder="Password">
-
-<div id="authMsg" class="msg"></div>
-
-<button class="btn primary"
-style="width:100%"
-onclick="login()">
-Login
-</button>
-
-<button class="btn dark"
-style="width:100%;margin-top:8px"
-onclick="signup()">
-Create Account
-</button>
-
-<button class="btn"
-style="width:100%;margin-top:8px;background:#eee"
-onclick="closeLogin()">
-Close
-</button>
-
+    <div class="status" id="authStatus"></div>
+  </div>
 </div>
-</div>
-
 
 <script>
-
-/* SUPABASE CONNECTION */
-
 const SUPABASE_URL =
 "https://jpedjempymwlshyarvmr.supabase.co";
 
@@ -188,234 +263,326 @@ const SUPABASE_KEY =
 const { createClient } = supabase;
 
 const db = createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
-
-/* DEFAULT RATES */
-
 let rates = {
-CFA_NGN:0.76,
-NGN_CFA:1.31
+  XOF_NGN: 0.76,
+  NGN_XOF: 1.31
 };
 
+const direction = document.getElementById("direction");
+const amount = document.getElementById("amount");
+const receive = document.getElementById("receive");
+const receiveCurrency = document.getElementById("receiveCurrency");
+const rateText = document.getElementById("rateText");
 
-/* LOAD RATES FROM SUPABASE */
+const requestDirection =
+document.getElementById("requestDirection");
+
+const requestAmount =
+document.getElementById("requestAmount");
+
+const requestReceive =
+document.getElementById("requestReceive");
+
+const requestCurrency =
+document.getElementById("requestCurrency");
 
 async function loadRates(){
 
-const {data,error} = await db
-.from("exchange_rates")
-.select("from_currency,to_currency,rate")
-.eq("is_active",true);
+  const {data,error} = await db
+    .from("exchange_rates")
+    .select("from_currency,to_currency,rate")
+    .eq("is_active",true);
 
-if(error){
-console.log("Rate error:",error);
-return;
+  if(error){
+    console.log(error);
+    return;
+  }
+
+  data.forEach(row => {
+
+    if(row.from_currency === "XOF" &&
+       row.to_currency === "NGN"){
+      rates.XOF_NGN = Number(row.rate);
+    }
+
+    if(row.from_currency === "NGN" &&
+       row.to_currency === "XOF"){
+      rates.NGN_XOF = Number(row.rate);
+    }
+
+  });
+
+  updateCalculator();
+  updateRequestCalculator();
 }
 
-data.forEach(r => {
+function updateCalculator(){
 
-if(r.from_currency==="XOF" && r.to_currency==="NGN"){
-rates.CFA_NGN=Number(r.rate);
+  const value = Number(amount.value) || 0;
+  const selected = direction.value;
+  const result = value * rates[selected];
+
+  receive.textContent =
+    result.toLocaleString();
+
+  if(selected === "XOF_NGN"){
+    receiveCurrency.textContent = "NGN";
+    rateText.textContent =
+      "Rate: 1 CFA = " + rates.XOF_NGN + " NGN";
+  }else{
+    receiveCurrency.textContent = "CFA";
+    rateText.textContent =
+      "Rate: 1 NGN = " + rates.NGN_XOF + " CFA";
+  }
 }
 
-if(r.from_currency==="NGN" && r.to_currency==="XOF"){
-rates.NGN_CFA=Number(r.rate);
+function updateRequestCalculator(){
+
+  const value =
+    Number(requestAmount.value) || 0;
+
+  const selected =
+    requestDirection.value;
+
+  const result =
+    value * rates[selected];
+
+  requestReceive.textContent =
+    result.toLocaleString();
+
+  if(selected === "XOF_NGN"){
+    requestCurrency.textContent = "NGN";
+  }else{
+    requestCurrency.textContent = "CFA";
+  }
 }
 
-});
+direction.addEventListener("change",updateCalculator);
+amount.addEventListener("input",updateCalculator);
 
-calc();
-}
-
-
-/* CALCULATOR */
-
-function calc(){
-
-let d=document.getElementById("dir").value;
-
-let a=Number(
-document.getElementById("amount").value
-)||0;
-
-let r=rates[d];
-
-let currency =
-d==="CFA_NGN" ? "NGN" : "CFA";
-
-document.getElementById("out").textContent =
-(a*r).toLocaleString()+" "+currency;
-
-document.getElementById("rate").textContent =
-"Rate: 1 "+
-(d==="CFA_NGN"?"CFA":"NGN")+
-" = "+r+" "+
-currency;
-}
-
-
-/* LOGIN WINDOW */
-
-function openLogin(){
-
-document.getElementById("loginModal").style.display="flex";
-
-}
-
-function closeLogin(){
-
-document.getElementById("loginModal").style.display="none";
-
-}
-
-
-/* MESSAGE */
-
-function showMessage(text,error=false){
-
-let box=document.getElementById("authMsg");
-
-box.style.display="block";
-box.textContent=text;
-
-box.style.background=error ? "#fee2e2" : "#dcfce7";
-
-}
-
-
-/* SIGN UP */
-
-async function signup(){
-
-let email=document.getElementById("email").value.trim();
-
-let password=document.getElementById("password").value;
-
-if(!email || !password){
-
-showMessage("Please enter email and password.",true);
-
-return;
-}
-
-const {data,error} =
-await db.auth.signUp({
-email:email,
-password:password
-});
-
-if(error){
-
-showMessage(error.message,true);
-return;
-
-}
-
-showMessage(
-"Account created successfully. Check your email if confirmation is required."
+requestDirection.addEventListener(
+  "change",
+  updateRequestCalculator
 );
 
-}
-
-
-/* LOGIN */
-
-async function login(){
-
-let email=document.getElementById("email").value.trim();
-
-let password=document.getElementById("password").value;
-
-if(!email || !password){
-
-showMessage("Please enter email and password.",true);
-
-return;
-}
-
-const {data,error} =
-await db.auth.signInWithPassword({
-email:email,
-password:password
-});
-
-if(error){
-
-showMessage(error.message,true);
-return;
-
-}
-
-closeLogin();
-
-updateAccount(data.user);
-
-}
-
-
-/* ACCOUNT UI */
-
-function updateAccount(user){
-
-let area=document.getElementById("accountArea");
-
-if(user){
-
-area.innerHTML=`
-<button class="btn primary"
-onclick="logout()">
-Logout
-</button>
-`;
-
-}else{
-
-area.innerHTML=`
-<button class="btn primary"
-onclick="openLogin()">
-Login
-</button>
-`;
-
-}
-
-}
-
-
-/* LOGOUT */
-
-async function logout(){
-
-await db.auth.signOut();
-
-updateAccount(null);
-
-}
-
-
-/* CHECK CURRENT SESSION */
-
-async function checkUser(){
-
-const {data} =
-await db.auth.getSession();
-
-updateAccount(
-data.session ? data.session.user : null
+requestAmount.addEventListener(
+  "input",
+  updateRequestCalculator
 );
 
+/* AUTH */
+
+const modal =
+document.getElementById("authModal");
+
+document.getElementById("loginButton")
+.addEventListener("click",async()=>{
+
+  const {data} =
+    await db.auth.getSession();
+
+  if(data.session){
+    await db.auth.signOut();
+  }else{
+    modal.style.display="flex";
+  }
+});
+
+document.getElementById("closeModal")
+.addEventListener("click",()=>{
+  modal.style.display="none";
+});
+
+document.getElementById("register")
+.addEventListener("click",async()=>{
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  const status =
+    document.getElementById("authStatus");
+
+  if(!email || !password){
+    status.style.display="block";
+    status.textContent =
+      "Cika email da password.";
+    return;
+  }
+
+  const {error} =
+    await db.auth.signUp({
+      email,
+      password
+    });
+
+  status.style.display="block";
+
+  if(error){
+    status.textContent=error.message;
+  }else{
+    status.textContent =
+      "Account an ƙirƙira successfully.";
+  }
+});
+
+document.getElementById("login")
+.addEventListener("click",async()=>{
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  const status =
+    document.getElementById("authStatus");
+
+  const {error} =
+    await db.auth.signInWithPassword({
+      email,
+      password
+    });
+
+  status.style.display="block";
+
+  if(error){
+    status.textContent=error.message;
+  }else{
+    status.textContent="Login successful.";
+    modal.style.display="none";
+    updateUser();
+  }
+});
+
+async function updateUser(){
+
+  const {data} =
+    await db.auth.getSession();
+
+  const userText =
+    document.getElementById("userText");
+
+  const loginButton =
+    document.getElementById("loginButton");
+
+  if(data.session){
+
+    userText.textContent =
+      data.session.user.email;
+
+    loginButton.textContent =
+      "Logout";
+
+  }else{
+
+    userText.textContent="";
+
+    loginButton.textContent =
+      "Login";
+  }
 }
 
+/* EXCHANGE REQUEST */
+
+document.getElementById("submitRequest")
+.addEventListener("click",async()=>{
+
+  const status =
+    document.getElementById("requestStatus");
+
+  const phone =
+    document.getElementById("phone").value.trim();
+
+  const value =
+    Number(requestAmount.value);
+
+  const selected =
+    requestDirection.value;
+
+  const {data} =
+    await db.auth.getSession();
+
+  if(!data.session){
+
+    status.style.display="block";
+    status.textContent =
+      "Da farko ka yi Login kafin ka aika request.";
+    return;
+  }
+
+  if(!phone){
+
+    status.style.display="block";
+    status.textContent =
+      "Saka phone number ɗinka.";
+    return;
+  }
+
+  if(!value || value <= 0){
+
+    status.style.display="block";
+    status.textContent =
+      "Saka amount mai inganci.";
+    return;
+  }
+
+  const receiveAmount =
+    value * rates[selected];
+
+  const {error} =
+    await db
+      .from("exchange_requests")
+      .insert({
+        user_id:data.session.user.id,
+        customer_name:
+          data.session.user.email,
+        customer_phone:phone,
+        direction:selected,
+        send_amount:value,
+        receive_amount:receiveAmount,
+        rate:rates[selected],
+        status:"pending"
+      });
+
+  status.style.display="block";
+
+  if(error){
+
+    console.log(error);
+
+    status.textContent =
+      "An samu matsala wajen aika request: "
+      + error.message;
+
+  }else{
+
+    status.textContent =
+      "✅ An aika Exchange Request ɗinka successfully. Za mu duba shi.";
+
+    document.getElementById("phone").value="";
+    requestAmount.value="";
+    updateRequestCalculator();
+  }
+
+});
 
 /* START */
 
 loadRates();
+updateUser();
+updateCalculator();
+updateRequestCalculator();
 
-checkUser();
-
+db.auth.onAuthStateChange(()=>{
+  updateUser();
+});
 </script>
 
 </body>
